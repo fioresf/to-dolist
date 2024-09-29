@@ -4,7 +4,7 @@ import mongoose from "mongoose";
  export const connectdb = async () => {
   try {
     await mongoose.connect("mongodb://localhost:27017/to-doList");
-    console.log("<< Mongodb database connected successfully >>");
+    console.log("<< MongoDB database connected successfully >>");
   } catch (error) {
     console.error("Error connecting to database");
   }

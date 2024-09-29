@@ -1,9 +1,9 @@
 import express from "express";
+import cors from "cors";
+import morgan from "morgan";
 
 //Configuracion de express
 const app = express();
-const morgan = require("morgan");
-const cors = require("cors");
 
 // Configuracion de CORS
 app.use(cors());
