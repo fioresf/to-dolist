@@ -17,7 +17,7 @@ export const createTask = async (req, res) => {
     const { title, description, expirationDate, category, state } =
       req.body;
 
-      //validar que los campos obligatorios no esten vacios
+      // Validate fields
     if (!title || !description || !category) {
         return res.status(400).json({ message: "Please fill all fields" });
         }
@@ -37,7 +37,7 @@ export const createTask = async (req, res) => {
   }
 };
 
-// Actualizar una tarea
+// u
 export const updateTask = async (req, res) => {
   try {
     const { id } = req.params;
@@ -56,7 +56,7 @@ export const updateTask = async (req, res) => {
   }
 };
 
-// Eliminar una tarea
+// Delete a task
 export const deleteTask = async (req, res) => {
   try {
     const { id } = req.params;

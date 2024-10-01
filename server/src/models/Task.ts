@@ -1,6 +1,6 @@
 import  mongoose from "mongoose";
 
-// Se define el modelo de la tarea
+// Create mongoose schema
 const taskSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -37,5 +37,5 @@ const taskSchema = new mongoose.Schema({
   },
 });
 
-// Se crea el modelo basado en el schema
+// Create mongoose model
 export default mongoose.model("Task", taskSchema);
