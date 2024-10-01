@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-// Cadena de conexion
+// Conection to the database
  export const connectdb = async () => {
   try {
     await mongoose.connect("mongodb://localhost:27017/to-doList");
