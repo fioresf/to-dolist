@@ -10,10 +10,13 @@ const app = express();
 app.use(cors());
 
 // Middleware
-app.use(express.json()); 
+app.use(express.json());
 app.use(morgan("dev"));
 
 // Routes
 app.use("/tasks", tasksRoutes);
+app.use((req, res) => {
+  res.status(404).json({ message: "Route not found" });
+});
 
 export default app;

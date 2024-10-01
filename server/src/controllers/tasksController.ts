@@ -1,7 +1,9 @@
 import Task from "../models/Task";
+import { isValidObjectId } from "mongoose";
+import { Request, Response } from "express";
 
 //Get all tasks
-export const getTasks = async (req, res) => {
+export const getTasks = async (req: Request, res: Response) => {
   try {
     const tasks = await Task.find();
 
@@ -12,22 +14,25 @@ export const getTasks = async (req, res) => {
 };
 
 //Create a new task
-export const createTask = async (req, res) => {
+export const createTask = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
-    const { title, description, expirationDate, category, state } =
-      req.body;
+    const { title, description, expirationDate, category, state } = req.body;
 
-      // Validate fields
+    // Validate fields
     if (!title || !description || !category) {
-        return res.status(400).json({ message: "Please fill all fields" });
-        }
+      res.status(400).json({ message: "Please fill all fields" });
+      return;
+    }
 
     const newTask = new Task({
       title,
       description,
       expirationDate,
       category,
-      state
+      state,
     });
 
     const savedTask = await newTask.save();
@@ -37,17 +42,23 @@ export const createTask = async (req, res) => {
   }
 };
 
-// u
-export const updateTask = async (req, res) => {
+// update a task
+export const updateTask = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
+
+    if (!isValidObjectId(id)) {
+       res.status(400).json({ message: "Invalid Task ID" });
+       return;
+    }
 
     const updatedTask = await Task.findByIdAndUpdate(id, req.body, {
       new: true,
     });
 
     if (!updatedTask) {
-      return res.status(404).json({ message: "Task not found" });
+       res.status(404).json({ message: "Task not found" });
+      return;
     }
 
     res.status(200).json({ message: "Task updated succesfully", updatedTask });
@@ -57,15 +68,21 @@ export const updateTask = async (req, res) => {
 };
 
 // Delete a task
-export const deleteTask = async (req, res) => {
+export const deleteTask = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
+
+    if (!isValidObjectId(id)) {
+       res.status(400).json({ message: "Invalid Task ID" });
+       return;
+    }
 
     const deletedTask = await Task.findByIdAndDelete(id);
 
     if (!deletedTask) {
       console.log("Task not found");
-      return res.status(404).json({ message: "Task not found" });
+       res.status(404).json({ message: "Task not found" });
+       return;
     }
 
     res.status(200).json({ message: "Task deleted succesfully" });

@@ -1,7 +1,16 @@
-import  mongoose from "mongoose";
+import  { Schema, model, Document } from "mongoose";
 
 // Create mongoose schema
-const taskSchema = new mongoose.Schema({
+
+interface ITask extends Document {
+  title: string;
+  description: string;
+  expirationDate: Date;
+  category: "Personal" | "Trabajo" | "Estudios" | "Ocio";
+  state?: "Pendiente" | "En progreso" | "Completada";
+}
+
+const taskSchema = new Schema<ITask>({
   title: {
     type: String,
     required: [true, "Please enter a title"],
@@ -25,17 +34,9 @@ const taskSchema = new mongoose.Schema({
     default: "Pendiente",
     required: false,
   },
-  createdAt: {
-    type: Date,
-    required: false,
-    default: Date.now(),
-  },
-  updatedAt: {
-    type: Date,
-    required: false,
-    default: Date.now(),
-  },
+}, {
+  timestamps: true,
 });
 
 // Create mongoose model
-export default mongoose.model("Task", taskSchema);
+export default model<ITask>("Task", taskSchema);
