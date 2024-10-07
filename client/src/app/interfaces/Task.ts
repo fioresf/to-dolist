@@ -3,6 +3,6 @@ export interface Task {
     title: string;
     description: string;
     expirationDate: Date;
-    category: string;
-    state?: string;
+    category:'Personal' | 'Trabajo' | 'Estudios' | 'Ocio';
+    state?: 'Pendiente' | 'En progreso' | 'Completada';
 }
