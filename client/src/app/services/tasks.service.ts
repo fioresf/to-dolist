@@ -7,6 +7,7 @@ import { catchError, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
+ 
 export class TasksService {
   urlAPI = environment.apiURL;
 
@@ -18,13 +19,13 @@ export class TasksService {
       .pipe(catchError(this.handleError));
   }
 
-  createTask(task: Task): Observable<Task | Task[]> {
+  createTask(task: Task): Observable<Task> {
     return this.httpClient
       .post<Task>(`${this.urlAPI}/tasks`, task)
       .pipe(catchError(this.handleError));
   }
 
-  updateTask(id: string, task: Task): Observable<Task | Task[]> {
+  updateTask(id: string, task: Task): Observable<Task> {
     return this.httpClient
       .put<Task>(`${this.urlAPI}/tasks/${id}`, task)
       .pipe(catchError(this.handleError));
